@@ -1,0 +1,6 @@
+
+# mysql账号
+cdh centos01  root/123456
+
+# cdh页面登录页面:
+admin/admin
