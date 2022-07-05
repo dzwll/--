@@ -23,8 +23,10 @@ echo -e '192.168.80.xxx cdh01\n192.168.80.xxx cdh02\n192.168.80.xxx cdh03'  >> /
     systemctl disable firewalld
 
 ## 6. 关闭SElinux
-    # 查看状态： getenforce
-    # 临时关闭： setenforce 0
+    # 查看状态： 
+    getenforce
+    # 临时关闭： 
+    setenforce 0
     # 永久关闭： 
         sed -i 's/SELINUX=enforcing/SELINUX=disable/' /etc/selinux/config
     # 验证: cat /etc/selinux/config
@@ -166,8 +168,8 @@ EOF
     yum install -y creterepo
     createrepo .
     # 创建repo (所有节点)
-    mkdir -p /etc/yum.repo.d
-    vim /etc/yum.repo.d/cloudera-manager.repo
+    mkdir -p /etc/yum.repos.d
+    vim /etc/yum.repos.d/cloudera-manager.repo
     <<EOF
     [cloudera-manager]
     name=Cloudera Manager 6.3.1
@@ -208,7 +210,7 @@ EOF
 
     # 执行CM 初始化脚本
     cp ./mysql-connector-java-8.0.18.jar /opt/cloudera/cm/lib
-    /opt/cloudera/cm/schema/scm_prepare_database.sh mysql cdh01 root 123456
+    /opt/cloudera/cm/schema/scm_prepare_database.sh mysql cdh root 123456
 
     # 启动服务
     systemctl start cloudera-scm-server.service
@@ -288,4 +290,21 @@ EOF
     # 此步骤需要重启机器生效，可以设置完后再重启。
 
 ## 报错: MainThread agent        ERROR    Heartbeating to 192.168.226.129:7182 failed.
-    # 检查端口是否通过: nc -w 1 192.168.226.129 7182
+    # 检查端口是否通过: nc -w 1 10.10.40.91 7182
+
+## 修改serverhost地址
+    vi /etc/cloudera-scm-agent/config.ini
+## 卸载
+    rpm -qa | grep cloudera
+
+##  cdh 主机运行状况不良。 - cdh03.com
+    rm -rf /var/lib/cloudera-scm-agent/cm_guid
+    systemctl restart cloudera-scm-agent
+
+## 查看目录大小
+ du -h -x --max-depth=1
+
+
+ ## 删除文件
+ /var/lib/cloudera-scm-server/search 
+ /tmp/

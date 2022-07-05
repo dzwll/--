@@ -9,3 +9,15 @@ Yang1234!!
 
 ## 中软svn:
 yangdezhi/yangdezhi@2021
+
+## CTO数据中台
+http://139.9.134.240:8180/uniteplatform-ui
+用户名：hudongyang 密码：hdy1234!$
+
+## git代码数量统计
+10.88.40.28:3306
+view/View@123
+
+select user_name,sum(addition),sum(deletion),sum(total) from ca_commit_record group by user_name order by  sum(addition) desc
+
+2-8

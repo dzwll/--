@@ -22,3 +22,20 @@
  df -h
 
 
+
+## linux 增加交换空间
+   参考 https://blog.csdn.net/qq_43606931/article/details/124016483
+
+free -h
+cat /proc/swaps
+mkswap /swap1/swap
+swapon /swap1/swap
+chmod 600 /swap1/swap
+vim /etc/fstab
+cat /proc/sys/vm/swappiness
+sysctl vm.swappiness=50
+vim /etc/sysctl.conf
+sysctl -p
+df -h
+free -h
+history
